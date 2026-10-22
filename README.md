@@ -1,44 +1,36 @@
 # Stockroom
 
-Stockroom is a small-shop inventory tracker built with Next.js, Better Auth, and PostgreSQL. For local development, PostgreSQL runs in Docker and has no hosting fee.
+Stockroom is a small-shop inventory tracker built with Next.js, Better Auth, and PostgreSQL. Docker Compose runs the app, database, and local database viewer together.
 
-## Run locally
+## Run with Docker
 
-Requirements: Node.js 20+ and Docker Desktop.
+Requirement: Docker Desktop.
 
 1. Copy `.env.example` to `.env.local` and replace `BETTER_AUTH_SECRET` with a random secret of at least 32 characters. Keep `.env.local` private.
-2. Install the app dependencies:
+2. Start Docker Desktop and wait for it to finish starting.
+3. Build and start the full system:
 
    ```bash
-   npm install
+   docker compose up --build -d
    ```
 
-3. Start Docker Desktop and wait for it to finish starting.
-4. Start the database container:
+The app container waits for PostgreSQL, applies the database migrations, then starts the app. Open:
 
-   ```bash
-   npm run db:up
-   ```
+- App: [http://localhost:3000](http://localhost:3000)
+- Local database viewer: [http://localhost:8080](http://localhost:8080)
 
-5. Create Better Auth's tables:
+In Adminer, select **PostgreSQL** and use server `database`, username `stockroom`, password `stockroom_local_only`, and database `stockroom`.
 
-   ```bash
-   npm run db:migrate
-   ```
+Stop the containers with `docker compose down`. The database volume remains on that computer, so the data is still there when the system starts again.
 
-6. Start the app:
-
-   ```bash
-   npm run dev
-   ```
-
-Open [http://localhost:3000](http://localhost:3000), create an account, and add products. Product records are tied to the signed-in account. The Docker named volume keeps the database when the container stops; `npm run db:down` stops the container without deleting that volume.
+Create an account at the app address and add products. Product records are tied to the signed-in account.
 
 ## Current scope
 
 - Email and password sign-up and sign-in
 - Per-account product inventory
 - Product search, categories, stock adjustments, and low-stock alerts
-- Local PostgreSQL storage in Docker
+- PostgreSQL database in Docker
+- App, database, and local database viewer started together with Docker Compose
 
-This is a local development setup. To serve customers over the internet, the app and database need to run on an internet-accessible host, which may have costs. Email verification and password reset email delivery are not configured yet.
+This Compose setup is for local use. To serve customers over the internet, the app and database need to run on a secured, internet-accessible host, which may have costs. Email verification and password reset email delivery are not configured yet.

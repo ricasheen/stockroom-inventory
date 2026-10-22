@@ -19,6 +19,36 @@ services:
       timeout: 3s
       retries: 10
 
+  migrate:
+    build:
+      context: .
+      target: migrator
+    env_file:
+      - .env.local
+    environment:
+      DATABASE_URL: postgres://stockroom:stockroom_local_only@database:5432/stockroom
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      target: runner
+    container_name: stockroom-inventory-app
+    restart: unless-stopped
+    env_file:
+      - .env.local
+    environment:
+      DATABASE_URL: postgres://stockroom:stockroom_local_only@database:5432/stockroom
+      BETTER_AUTH_URL: http://localhost:3000
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
   adminer:
     container_name: stockroom-inventory-adminer
     image: adminer:6.1.2
