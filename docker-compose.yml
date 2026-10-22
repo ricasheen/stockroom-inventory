@@ -1,0 +1,37 @@
+name: stockroom-inventory
+
+services:
+  database:
+    container_name: stockroom-inventory-database
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: stockroom
+      POSTGRES_USER: stockroom
+      POSTGRES_PASSWORD: stockroom_local_only
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - stockroom-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U stockroom -d stockroom"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  adminer:
+    container_name: stockroom-inventory-adminer
+    image: adminer:6.1.2
+    restart: unless-stopped
+    environment:
+      ADMINER_DEFAULT_SERVER: database
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      database:
+        condition: service_healthy
+
+volumes:
+  stockroom-data:
+    external: true
+    name: ai-resume-matcher_stockroom-data
