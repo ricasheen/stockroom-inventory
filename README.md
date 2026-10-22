@@ -7,20 +7,26 @@ Stockroom is a small-shop inventory tracker built with Next.js, Better Auth, and
 Requirements: Node.js 20+ and Docker Desktop.
 
 1. Copy `.env.example` to `.env.local` and replace `BETTER_AUTH_SECRET` with a random secret of at least 32 characters. Keep `.env.local` private.
-2. Start Docker Desktop and wait for it to finish starting.
-3. Start the database container:
+2. Install the app dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start Docker Desktop and wait for it to finish starting.
+4. Start the database container:
 
    ```bash
    npm run db:up
    ```
 
-4. Create Better Auth's tables:
+5. Create Better Auth's tables:
 
    ```bash
    npm run db:migrate
    ```
 
-5. Start the app:
+6. Start the app:
 
    ```bash
    npm run dev

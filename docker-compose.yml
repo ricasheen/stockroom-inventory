@@ -33,5 +33,4 @@ services:
 
 volumes:
   stockroom-data:
-    external: true
     name: ai-resume-matcher_stockroom-data
