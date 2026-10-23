@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f8fa;
-  --foreground: #0f172a;
+  --background: #e5f2c9;
+  --foreground: #10231f;
 }
 
 @theme inline {
@@ -16,4 +16,250 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.dashboard-shell,
+.auth-shell {
+  background:
+    radial-gradient(ellipse at 90% 0%, rgb(194 233 106 / 42%), transparent 38rem),
+    radial-gradient(ellipse at 8% 92%, rgb(80 181 45 / 16%), transparent 40rem),
+    linear-gradient(120deg, #edf7dc 0%, #d8efb3 48%, #c0e487 100%);
+  background-attachment: fixed;
+}
+
+.dashboard-sidebar {
+  background: linear-gradient(180deg, #a2d847 0%, #7dcc38 48%, #58b638 100%);
+  backdrop-filter: blur(16px);
+  border-color: rgb(72 173 40 / 40%);
+}
+
+.dashboard-sidebar nav button {
+  position: relative;
+  z-index: 0;
+  border-radius: 14px;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.dashboard-sidebar nav button:hover {
+  z-index: 1;
+  transform: scale(1.035);
+  box-shadow: 0 5px 14px rgb(15 23 42 / 8%);
+}
+
+.dashboard-sidebar nav button:active {
+  transform: scale(1.015);
+}
+
+.sidebar-note {
+  background: linear-gradient(135deg, #edf8dc 0%, #deefbd 55%, #cde9a0 100%);
+  border: 1px solid rgb(72 173 40 / 32%);
+}
+
+.brand-mark {
+  background: linear-gradient(140deg, #8bd540, #48ad28 46%, #216c38 100%);
+  box-shadow: 0 7px 16px rgb(33 108 56 / 28%);
+}
+
+.gradient-surface {
+  background: linear-gradient(120deg, #f2f9e8 0%, #e5f2d2 52%, #d6edb8 100%);
+  border-color: rgb(72 173 40 / 34%);
+}
+
+.auth-card {
+  background: linear-gradient(120deg, #f4faeb 0%, #e6f3d3 52%, #d7eebe 100%);
+}
+
+form.gradient-surface {
+  background: linear-gradient(145deg, #f4fae9 0%, #e5f2ce 52%, #d2e9ad 100%);
+}
+
+/* Carry the same green palette through controls, popovers, badges and empty states. */
+.dashboard-shell [class~="bg-white"],
+.dashboard-shell [class~="bg-slate-50"],
+.dashboard-shell [class~="bg-slate-100"],
+.dashboard-shell [class~="bg-emerald-50"],
+.dashboard-shell [class~="bg-emerald-100"],
+.dashboard-shell [class~="bg-teal-100"],
+.dashboard-shell [class~="bg-amber-50"],
+.dashboard-shell [class~="bg-amber-100"],
+.dashboard-shell [class~="bg-rose-50"] {
+  background-color: transparent;
+  background-image: linear-gradient(120deg, #eff8e3, #dcefc1);
+}
+
+.gradient-surface .text-slate-500 { color: #365c2b; }
+.gradient-surface .text-slate-400 { color: #496f36; }
+.gradient-surface .text-slate-600 { color: #29452a; }
+.gradient-surface .text-slate-700 { color: #243b20; }
+
+.dashboard-shell .text-rose-700,
+.dashboard-shell .text-rose-800,
+.dashboard-shell .text-amber-800 { color: #216c38; }
+
+.gradient-surface thead tr {
+  background: linear-gradient(90deg, #a2d847 0%, #78c83a 55%, #50b52d 100%);
+}
+
+.gradient-surface thead th {
+  color: #216c38;
+}
+
+.gradient-surface tbody tr {
+  background-color: rgb(255 255 255 / 24%);
+}
+
+.gradient-surface tbody tr:hover {
+  background-color: rgb(162 216 71 / 30%);
+}
+
+.gradient-surface footer {
+  background: linear-gradient(90deg, #e5f2ce 0%, #d8edb8 55%, #c7e79f 100%);
+  color: #216c38;
+}
+
+/* Give the inventory table a clear surface hierarchy and calmer contrast. */
+#products {
+  background: linear-gradient(145deg, #f8fbf3 0%, #edf6e2 100%);
+  border-color: #cfe3b6;
+}
+
+#products > div:first-child,
+#products > div:nth-child(2) {
+  background: linear-gradient(110deg, #fbfdf8, #f1f8e8);
+}
+
+#products .overflow-x-auto {
+  background: #fbfdf8;
+}
+
+#products table thead tr {
+  background: linear-gradient(90deg, #7fc43c 0%, #59b438 55%, #399b3e 100%);
+  box-shadow: inset 0 -2px 0 rgb(33 108 56 / 12%);
+}
+
+#products table thead th {
+  color: #fff;
+}
+
+#products table tbody tr {
+  background: #fff;
+}
+
+#products table tbody tr:nth-child(even) {
+  background: #f4f9ed;
+}
+
+#products table tbody tr:hover {
+  background: #eaf5dc;
+}
+
+#products footer {
+  background: linear-gradient(90deg, #f0f7e7, #e6f2d7);
+  color: #527442;
+}
+
+button.bg-emerald-700 {
+  background-image: linear-gradient(135deg, #48ad28 0%, #338c2a 48%, #216c38 100%);
+  box-shadow: 0 7px 16px rgb(33 108 56 / 24%);
+}
+
+button.bg-emerald-700:hover {
+  background-image: linear-gradient(135deg, #3b9828 0%, #287832 54%, #19552e 100%);
+}
+
+input:not([type="file"]) {
+  background-image: linear-gradient(125deg, #fbfdf7, #f1f8e5 55%, #e7f3d4);
+}
+
+input:not([type="file"]):focus {
+  background-image: linear-gradient(125deg, #ffffff, #eef7dc 55%, #dcefb9);
+}
+
+.dashboard-main {
+  animation: rise-in 420ms ease-out both;
+}
+
+.dashboard-main > header .text-slate-500 {
+  color: #14532d;
+}
+
+.dashboard-main > header .text-slate-400 {
+  color: #166534;
+}
+
+.welcome-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 142px;
+  padding: 25px 28px;
+  border: 1px solid rgb(167 243 208 / 62%);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 91% 22%, rgb(255 255 255 / 42%) 0 2px, transparent 3px),
+    radial-gradient(ellipse at 95% 8%, rgb(194 233 106 / 60%), transparent 35%),
+    linear-gradient(115deg, #dff1b8 0%, #c7e996 48%, #a8dc62 100%);
+  box-shadow: 0 12px 32px rgb(15 23 42 / 4%);
+}
+
+.welcome-panel::after {
+  position: absolute;
+  right: 7%;
+  bottom: -72px;
+  width: 220px;
+  height: 150px;
+  border: 1px solid rgb(16 185 129 / 12%);
+  border-radius: 50%;
+  content: "";
+  transform: rotate(-20deg);
+  box-shadow: 0 -10px 0 10px rgb(16 185 129 / 3%), 0 -20px 0 20px rgb(16 185 129 / 2%);
+  pointer-events: none;
+}
+
+.welcome-panel .text-slate-500 {
+  color: #216c38;
+}
+
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgb(226 232 240 / 86%);
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgb(15 23 42 / 4%);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.stat-card::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  content: "";
+  background: linear-gradient(90deg, #a2d847, #7dcc38 55%, #50b52d);
+}
+
+.stat-blue::before { background: linear-gradient(90deg, #a2d847, #7dcc38); }
+.stat-amber::before { background: linear-gradient(90deg, #9bd444, #50b52d); }
+.stat-violet::before { background: linear-gradient(90deg, #7dcc38, #216c38); }
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgb(15 23 42 / 8%);
+}
+
+.auth-card {
+  border-color: rgb(255 255 255 / 90%);
+  box-shadow: 0 24px 70px rgb(15 23 42 / 10%);
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
