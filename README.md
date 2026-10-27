@@ -1,36 +1,57 @@
 # Stockroom
 
-Stockroom is a small-shop inventory tracker built with Next.js, Better Auth, and PostgreSQL. Docker Compose runs the app, database, and local database viewer together.
+Stockroom is a small-shop inventory system built to demonstrate Rica Sheen G. Cabidog's web and mobile development stack: Laravel/PHP, MySQL, HTML/CSS/JavaScript, Flutter, Docker, and Git.
 
-## Run with Docker
+## Stack and project layout
 
-Requirement: Docker Desktop.
+- `backend/` — Laravel 12 JSON API, Sanctum bearer-token authentication, Eloquent models, migrations, and the Blade web client.
+- `mobile/` — Flutter companion app for signing in and viewing inventory.
+- `docker-compose.yml` — MySQL, Laravel API/web app, and Adminer for local development.
 
-1. Copy `.env.example` to `.env.local` and replace `BETTER_AUTH_SECRET` with a random secret of at least 32 characters. Keep `.env.local` private.
-2. Start Docker Desktop and wait for it to finish starting.
-3. Build and start the full system:
+The original Next.js/PostgreSQL source is archived in `legacy-next/` as a migration reference; the repository root now uses Laravel/MySQL and Flutter. Data in the old PostgreSQL volume is not migrated automatically.
 
-   ```bash
-   docker compose up --build -d
-   ```
+## Run the web app and API
 
-The app container waits for PostgreSQL, applies the database migrations, then starts the app. Open:
+Requirement: Docker Desktop with Compose.
 
-- App: [http://localhost:3000](http://localhost:3000)
-- Local database viewer: [http://localhost:8080](http://localhost:8080)
+```bash
+docker compose up --build -d
+```
 
-In Adminer, select **PostgreSQL** and use server `database`, username `stockroom`, password `stockroom_local_only`, and database `stockroom`.
+Open the web app at [http://localhost:8000](http://localhost:8000). Adminer is at [http://localhost:8080](http://localhost:8080), with server `database`, user `stockroom`, password `stockroom_local_only`, and database `stockroom`.
 
-Stop the containers with `docker compose down`. The database volume remains on that computer, so the data is still there when the system starts again.
+The PHP 8.4 Laravel container installs dependencies with Composer and runs database migrations at startup. MySQL is exposed on host port 3307 because port 3306 is already in use on this computer; other containers connect on 3306. The Compose credentials and app key are for local development only. For a shared or deployed environment, set a fresh `APP_KEY` (generate it with `php artisan key:generate --show`) and unique database credentials in your deployment configuration.
 
-Create an account at the app address and add products. Product records are tied to the signed-in account.
+### API
+
+- `POST /api/register` — create an account (`name`, `email`, `password`).
+- `POST /api/login` — sign in and receive a Sanctum bearer token (`email`, `password`).
+- `POST /api/logout` — revoke the current token.
+- `GET /api/products` — list the signed-in user's products.
+- `POST /api/products` — add a product (`name`, `sku`, optional `category`, `quantity`, `price`, `reorder_level`).
+- `PUT/PATCH /api/products/{id}` — update a product.
+- `DELETE /api/products/{id}` — delete a product.
+
+Product endpoints require `Authorization: Bearer <token>`. Records are scoped to their owner, and product codes are unique per account.
+
+## Run the Flutter app
+
+Flutter 3.41.2 or newer is recommended. From `mobile/`, restore the locked packages, then run in Chrome:
+
+```bash
+cd mobile
+flutter pub get
+flutter run -d chrome --web-port=8081 --dart-define=API_URL=http://localhost:8000/api
+```
+
+For an Android emulator, use `flutter run -d <device-id> --dart-define=API_URL=http://10.0.2.2:8000/api`; `10.0.2.2` reaches the host machine from the emulator. For a physical phone, use the computer's LAN IP address. The mobile client currently supports sign-in and inventory viewing; web handles adding and deleting products.
 
 ## Current scope
 
-- Email and password sign-up and sign-in
-- Per-account product inventory
-- Product search, categories, stock adjustments, and low-stock alerts
-- PostgreSQL database in Docker
-- App, database, and local database viewer started together with Docker Compose
+- Account registration, sign-in, and token revocation API.
+- Product create, list, update, and delete API with per-user ownership.
+- Responsive Blade inventory page for sign-in, listing, adding, and deleting products.
+- MySQL schema and Docker Compose development environment.
+- Flutter sign-in and inventory list client.
 
-This Compose setup is for local use. To serve customers over the internet, the app and database need to run on a secured, internet-accessible host, which may have costs. Email verification and password reset email delivery are not configured yet.
+Email verification, password reset, sales reports, and the old PostgreSQL data migration are not included in this first stack conversion.
