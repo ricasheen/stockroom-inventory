@@ -31,6 +31,9 @@ The PHP 8.4 Laravel container installs dependencies with Composer and runs datab
 - `POST /api/products` — add a product (`name`, `sku`, optional `category`, `quantity`, `price`, `reorder_level`).
 - `PUT/PATCH /api/products/{id}` — update a product.
 - `DELETE /api/products/{id}` — delete a product.
+- `POST /api/sales` — record a sale (`product_id`, `quantity`, `unit_price`) and deduct stock.
+- `GET /api/sales/analytics?period=week|month` — sales totals, daily trends, top products, and recent transactions.
+- `GET/PUT /api/profile` and `POST /api/profile/avatar` — view and update account details and profile picture.
 
 Product endpoints require `Authorization: Bearer <token>`. Records are scoped to their owner, and product codes are unique per account.
 
@@ -50,8 +53,9 @@ For an Android emulator, use `flutter run -d <device-id> --dart-define=API_URL=h
 
 - Account registration, sign-in, and token revocation API.
 - Product create, list, update, and delete API with per-user ownership.
-- Responsive Blade inventory page for sign-in, listing, adding, and deleting products.
+- Sales recording with stock deduction and a responsive analytics dashboard for revenue and units sold.
+- Responsive Blade dashboard for inventory, low-stock alerts, account settings, and sales.
 - MySQL schema and Docker Compose development environment.
 - Flutter sign-in and inventory list client.
 
-Email verification, password reset, sales reports, and the old PostgreSQL data migration are not included in this first stack conversion.
+Sales analytics include sales recorded after this feature was added; previous stock changes do not have historical sales records. Email verification, password reset, and the old PostgreSQL data migration are not included in this first stack conversion.

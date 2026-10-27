@@ -40,6 +40,8 @@ services:
       DB_PASSWORD: stockroom_local_only
     ports:
       - "127.0.0.1:8000:8000"
+    volumes:
+      - stockroom-uploads:/app/storage/app/public
     depends_on:
       database:
         condition: service_healthy
@@ -55,3 +57,4 @@ services:
         condition: service_healthy
 volumes:
   stockroom-data:
+  stockroom-uploads:
